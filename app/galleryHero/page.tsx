@@ -2,32 +2,19 @@
 import React, { useState, useEffect } from "react";
 import { SparklesCore } from "../components/ui/sparkles";
 import { useRouter } from "next/navigation";
+import randomColor from "randomcolor";
 
 const GalleryHero: React.FC = () => {
   const router = useRouter();
-  const colors: string[] = [
-    "FFFFFF",
-    "#fac89e",
-    "#e3e891",
-    "#c2fc99",
-    "#a3fcb3",
-    "#92e8d5",
-    "#96c8f2",
-    "#ada8ff",
-    "#ce94f7",
-    "#ed94dd",
-    "#fea8bb",
-  ];
-
-  const [colorIndex, setColorIndex] = useState<number>(0);
+  const [currentColor, setCurrentColor] = useState<string>(randomColor());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setColorIndex((prevIndex) => (prevIndex + 1) % colors.length);
-    }, 10000); // 
+      setCurrentColor(randomColor());
+    }, 10000); // 10000 ms = 10 seconds
 
-    return () => clearInterval(interval); 
-  }, [colors.length]);
+    return () => clearInterval(interval); // Clean up the interval on component unmount
+  }, []);
 
   return (
     <div className="h-[40rem] relative w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md">
@@ -37,9 +24,9 @@ const GalleryHero: React.FC = () => {
           background="transparent"
           minSize={0.8}
           maxSize={1.4}
-          particleDensity={150}
+          particleDensity={100}
           className="w-full h-full"
-          particleColor={colors[colorIndex]}
+          particleColor={currentColor}
         />
       </div>
       <h1
