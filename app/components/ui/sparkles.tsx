@@ -1,11 +1,8 @@
-"use client";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import type { Container, SingleOrMultiple } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
-import { cn } from "@/app/lib/utils";
 import { motion, useAnimation } from "framer-motion";
+import { Container } from "react-dom";
 
 type ParticlesProps = {
   id?: string;
@@ -18,7 +15,8 @@ type ParticlesProps = {
   particleColor?: string;
   particleDensity?: number;
 };
-export const SparklesCore = (props: ParticlesProps) => {
+
+export const SparklesCore = React.memo((props: ParticlesProps) => {
   const {
     id,
     className,
@@ -29,6 +27,7 @@ export const SparklesCore = (props: ParticlesProps) => {
     particleColor,
     particleDensity,
   } = props;
+
   const [init, setInit] = useState(false);
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -37,11 +36,11 @@ export const SparklesCore = (props: ParticlesProps) => {
       setInit(true);
     });
   }, []);
+
   const controls = useAnimation();
 
   const particlesLoaded = async (container?: Container) => {
     if (container) {
-      console.log(container);
       controls.start({
         opacity: 1,
         transition: {
@@ -52,12 +51,12 @@ export const SparklesCore = (props: ParticlesProps) => {
   };
 
   return (
-    <motion.div animate={controls} className={cn("opacity-0", className)}>
+    <motion.div animate={controls} className={`opacity-0 ${className}`}>
       {init && (
         <Particles
           id={id || "tsparticles"}
-          className={cn("h-full w-full")}
-          particlesLoaded={particlesLoaded}
+          className="h-full w-full"
+          particlesLoaded={(container?: ReactDOM.Container) => particlesLoaded(container)}
           options={{
             background: {
               color: {
@@ -68,7 +67,6 @@ export const SparklesCore = (props: ParticlesProps) => {
               enable: false,
               zIndex: 1,
             },
-
             fpsLimit: 120,
             interactivity: {
               events: {
@@ -80,7 +78,7 @@ export const SparklesCore = (props: ParticlesProps) => {
                   enable: false,
                   mode: "repulse",
                 },
-                resize: true as any,
+                resize: {},
               },
               modes: {
                 push: {
@@ -157,7 +155,7 @@ export const SparklesCore = (props: ParticlesProps) => {
                 close: true,
                 fill: true,
                 options: {},
-                type: {} as SingleOrMultiple<string> | undefined,
+                type: undefined,
               },
               groups: {},
               move: {
@@ -190,14 +188,6 @@ export const SparklesCore = (props: ParticlesProps) => {
                   inverse: false,
                   maxSpeed: 50,
                 },
-                path: {
-                  clamp: true,
-                  delay: {
-                    value: 0,
-                  },
-                  enable: false,
-                  options: {},
-                },
                 outModes: {
                   default: "out",
                 },
@@ -206,10 +196,6 @@ export const SparklesCore = (props: ParticlesProps) => {
                 speed: {
                   min: 0.1,
                   max: 1,
-                },
-                spin: {
-                  acceleration: 0,
-                  enable: false,
                 },
                 straight: false,
                 trail: {
@@ -265,7 +251,7 @@ export const SparklesCore = (props: ParticlesProps) => {
                 close: true,
                 fill: true,
                 options: {},
-                type: "circle",
+                type: "triangle"
               },
               size: {
                 value: {
@@ -417,18 +403,21 @@ export const SparklesCore = (props: ParticlesProps) => {
                 warp: false,
               },
               repulse: {
-                value: 0,
-                enabled: false,
                 distance: 1,
                 duration: 1,
                 factor: 1,
                 speed: 1,
+                maxSpeed: 50,
+                easing: "ease-out-quad",
               },
             },
-            detectRetina: true,
+            pauseOnBlur: true,
+            pauseOnOutsideViewport: true,
+            smooth: true,
           }}
         />
       )}
     </motion.div>
   );
-};
+});
+

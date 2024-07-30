@@ -18,7 +18,7 @@ const Album: React.FC<AlbumProps> = ({ album, onClick, onDelete }) => {
     <div
       onClick={onClick}
       style={{ minWidth: "200px", minHeight: "200px" }}
-      className="card bg-base-100 bg-opacity-75 shadow-xl max-w-xs w-full cursor-pointer"
+      className="card bg-base-100 bg-opacity-75 shadow-xl max-w-xs w-full cursor-pointer z-1"
     >
       <figure className="relative h-64 w-full">
         {isLoading && (

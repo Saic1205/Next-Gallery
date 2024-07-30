@@ -21,17 +21,17 @@ const GalleryHero: React.FC = () => {
       <div className="w-full absolute inset-0 h-screen">
         <SparklesCore
           id="tsparticlesfullpage"
-          background="transparent"
-          minSize={0.8}
-          maxSize={1.4}
-          particleDensity={100}
+          background="#000"
+          minSize={0.1}
+          maxSize={0.2}
+          particleDensity={1}
           className="w-full h-full"
-          particleColor={currentColor}
+          particleColor="#fff"
         />
       </div>
       <h1
         className="prose md:text-7xl text-3xl lg:text-6xl font-bold text-center text-white relative z-20 cursor-pointer"
-        onClick={() => router.push("gallery")}
+        onClick={() => router.push("login")}
       >
         Next GallerY!
       </h1>

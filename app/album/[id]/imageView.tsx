@@ -29,8 +29,8 @@ const Modal: React.FC<ModalProps> = ({ images, initialImageId, onClose }) => {
   return (
     <>
       <input type="checkbox" id="image_modal" className="modal-toggle" />
-      <div className="modal" role="dialog">
-        <div className="modal-box relative">
+      <div className="modal modal-open">
+        <div className="modal-box relative w-full max-w-5xl">
           <label
             htmlFor="image_modal"
             className="btn btn-sm btn-circle absolute right-2 top-2"
@@ -55,16 +55,22 @@ const Modal: React.FC<ModalProps> = ({ images, initialImageId, onClose }) => {
             ))}
           </div>
           <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-            <button className="btn btn-circle btn-outline btn-ghost" onClick={handlePrev}>
+            <button
+              className="btn btn-circle btn-outline btn-ghost"
+              onClick={handlePrev}
+            >
               ❮
             </button>
-            <button className="btn btn-circle btn-outline btn-ghost" onClick={handleNext}>
+            <button
+              className="btn btn-circle btn-outline btn-ghost"
+              onClick={handleNext}
+            >
               ❯
             </button>
           </div>
         </div>
         <label
-          className="modal-backdrop"
+          className="modal-backdrop opacity-50"
           htmlFor="image_modal"
           onClick={onClose}
         ></label>

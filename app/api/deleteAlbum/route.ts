@@ -1,35 +1,28 @@
-
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { getUserFromRequest } from "@/app/lib";
+import prisma from "@/prisma/client";
 
 export async function DELETE(req: NextRequest) {
   try {
-    const id = req.nextUrl.searchParams.get('id');
-    console.log("id", id, typeof id === "string", typeof id === "number");
+    const user = await getUserFromRequest(req);
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const id = req.nextUrl.searchParams.get("id");
     if (!id || typeof id !== "string") {
       return NextResponse.json({ error: "Invalid album ID" }, { status: 400 });
     }
 
-    // Delete the album's images
-    await prisma.album.deleteMany({
-      where: {
-        albumListId: parseInt(id, 10),
-      },
-    });
+    const album = await prisma.albumList.findUnique({ where: { id: parseInt(id, 10) } });
+    if (!album || album.userId !== user.id) {
+      return NextResponse.json({ error: "Album not found or unauthorized" }, { status: 404 });
+    }
 
-    // Delete the album
-    await prisma.albumList.delete({
-      where: {
-        id: parseInt(id, 10),
-      },
-    });
+    await prisma.album.deleteMany({ where: { albumListId: album.id } });
+    await prisma.albumList.delete({ where: { id: album.id } });
 
-    return NextResponse.json(
-      { message: "Album deleted successfully" },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: "Album deleted successfully" }, { status: 200 });
   } catch (error) {
     console.error("Error deleting album:", error);
     return NextResponse.json(

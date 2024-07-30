@@ -91,7 +91,7 @@ const AlbumDetails: React.FC = () => {
       <div className="absolute inset-0 z-0">
         <SparklesPreview />
       </div>
-      <div className="relative z-10 flex flex-col items-center top-10">
+      <div className="relative z-1 flex flex-col items-center top-10">
         <div className="w-full flex items-center justify-center mb-4 relative">
           <h1 className="text-4xl font-bold text-center absolute left-1/2 transform -translate-x-1/2 text-white">
             {album.albumName}

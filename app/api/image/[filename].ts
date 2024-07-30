@@ -4,7 +4,7 @@ import path from "path";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
-    const { filename } = req.query; // Assuming filename is a query parameter
+    const { filename } = req.query; 
     const decodedFilename = decodeURIComponent(filename as string);
     const filePath = path.join(
       process.cwd(),
