@@ -17,6 +17,7 @@
     "@types/randomcolor": "^0.5.9",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.4.0",
     "clsx": "^2.1.1",
     "fast-sort": "^3.4.0",
     "file-saver": "^2.0.5",
