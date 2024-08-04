@@ -1,16 +1,13 @@
 "use client";
-
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { handleLogout } from "./lib/action";
+import { useSession } from "./Context/sessionContext";
 
-interface NavbarProps {
-  session: any | null; // Ensure correct typing for the session prop
-}
-
-const Navbar: React.FC<NavbarProps> = ({ session }) => {
+const Navbar: React.FC = () => {
   const router = useRouter();
+  const { session } = useSession();
 
   const handleLogoutClick = async () => {
     await handleLogout();
@@ -49,9 +46,9 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
             <li>
               <Link href="/gallery">Gallery</Link>
             </li>
-              <li>
-                <button onClick={handleLogoutClick}>LogOut</button>
-              </li>
+            <li>
+              <button onClick={handleLogoutClick}>LogOut</button>
+            </li>
           </ul>
         </div>
       </div>

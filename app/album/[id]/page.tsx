@@ -16,7 +16,6 @@ const AlbumDetails: React.FC = () => {
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
   const [selectedImageIds, setSelectedImageIds] = useState<Set<string>>(new Set());
   const [modalImageId, setModalImageId] = useState<string | null>(null);
-
   const id = params.id as string;
 
   useEffect(() => {
