@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { handleLogout } from "./lib/action";
 import { useSession } from "./Context/sessionContext";
+import { toast } from "react-toastify";
 
 const Navbar: React.FC = () => {
   const router = useRouter();
@@ -11,6 +12,7 @@ const Navbar: React.FC = () => {
 
   const handleLogoutClick = async () => {
     await handleLogout();
+    toast.success("Logout successful");
     router.push("/login");
   };
 
@@ -46,8 +48,10 @@ const Navbar: React.FC = () => {
             <li>
               <Link href="/gallery">Gallery</Link>
             </li>
-            <li>
-              <button onClick={handleLogoutClick}>LogOut</button>
+            <li> { session ? 
+              (<button onClick={handleLogoutClick}>LogOut</button>) :
+              (<button onClick={() => router.push('/login')}>Login</button>) }
+              
             </li>
           </ul>
         </div>
@@ -61,7 +65,7 @@ const Navbar: React.FC = () => {
         {session ? (
           <div className="dropdown dropdown-end">
             <label tabIndex={0} role="button" className="btn btn-ghost">
-              <span className="text-white">{session.user?.name}!</span>
+              <span className="text-white">{session.user?.name}</span>
             </label>
             <ul
               tabIndex={0}

@@ -1,12 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "@/app/lib/server/auth";
+import { getUserFromToken } from "@/app/lib/auth";
 
 export async function GET(request: NextRequest) {
-  const session = await getSession(request);
-
-  if (!session) {
-    return NextResponse.json({ user: null }, { status: 401 });
+  const token = request.cookies.get("session")?.value;
+  
+  if (!token) {
+    return NextResponse.json({ error: "No session found" }, { status: 401 });
   }
 
-  return NextResponse.json({ user: session.user }, { status: 200 });
+  const user = await getUserFromToken(token);
+  
+  if (user) {
+    return NextResponse.json({ user }, { status: 200 });
+  } else {
+    return NextResponse.json({ error: "Invalid session" }, { status: 401 });
+  }
 }

@@ -22,9 +22,9 @@ const GalleryHero: React.FC = () => {
         <SparklesCore
           id="tsparticlesfullpage"
           background="#000"
-          minSize={0.1}
-          maxSize={0.2}
-          particleDensity={1}
+          minSize={0.4}
+          maxSize={1.2}
+          particleDensity={1000}
           className="w-full h-full"
           particleColor="#fff"
         />
