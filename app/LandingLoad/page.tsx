@@ -1,3 +1,4 @@
+// experimenting custom loading screen for the app (not used currently in the app)
 import React from 'react';
 
 const LoadingScreen = () => {

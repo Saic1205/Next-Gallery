@@ -1,3 +1,4 @@
+// experimenting with a custom loader (not used in the app)
 'use client'
 import { useEffect, useRef } from 'react';
 
