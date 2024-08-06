@@ -102,7 +102,7 @@ const Gallery: React.FC = () => {
   );
 
   return (
-    <div className="relative min-h-screen bg-base-200">
+    <div className="relative min-h-screen bg-black-200">
       <div className="absolute inset-0 z-0">
         <SparklesPreview />
       </div>
@@ -114,7 +114,8 @@ const Gallery: React.FC = () => {
         <AlbumModal
           isOpen={isModalOpen}
           onRequestClose={() => setIsModalOpen(false)}
-          onCreateAlbum={handleCreateAlbum}
+          onCreateAlbum={handleCreateAlbum}   // works even with the issue .(not urgent)
+          
         />
         <AlbumList
           albums={filteredAlbums}
@@ -124,7 +125,7 @@ const Gallery: React.FC = () => {
       </div>
       <ConfirmDeleteModal
         isOpen={isConfirmDeleteModalOpen}
-        onCancel={() => {
+        onRequestClose={() => {
           setIsConfirmDeleteModalOpen(false);
           setAlbumToDelete(null);
         }}

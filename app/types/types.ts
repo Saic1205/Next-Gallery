@@ -42,4 +42,5 @@ export type LoginRequest = {
 export type User = {
   email: string;
   sessionToken: string;
+  id: number;
 }

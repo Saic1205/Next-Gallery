@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import { login } from "@/app/lib";
+import { login } from "@/app/lib/auth";
 import { LoginRequest } from "@/app/types/types";
 
 export async function POST(req: NextRequest) {
   try {
     const body: LoginRequest = await req.json();
     const user = await login(body);
-
+    
     if (user) {
       const response = NextResponse.json({ user }, { status: 200 });
       response.cookies.set("session", user.sessionToken, {
-        expires: new Date(Date.now() + 2 * 60 * 60 * 1000), // 2 hours
         httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 6 * 60 * 60, // 6 hours
       });
       return response;
     } else {

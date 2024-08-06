@@ -1,25 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
-import { getUserFromRequest } from "@/app/lib";
+import { getUserFromToken } from "@/app/lib/auth";
+import { CloudinaryResult } from "@/app/types/types";
 
 export async function POST(req: NextRequest) {
-  const user = await getUserFromRequest(req);
+  const token = req.cookies.get("session")?.value;
+  if (!token) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const user = await getUserFromToken(token);
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const body = await req.json();
-  const { name, images } = body;
+  const { name, images } = await req.json();
 
   const newAlbum = await prisma.albumList.create({
     data: {
       albumName: name,
       userId: user.id,
       albums: {
-        create: images.map((image: any) => ({
+        create: images.map((image: CloudinaryResult) => ({
           imgName: image.display_name,
           imagePublicId: image.public_id,
-          imageUrl: image.url,
+          imageUrl: image.secure_url,
         })),
       },
     },
