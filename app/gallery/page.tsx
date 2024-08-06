@@ -33,14 +33,16 @@ const Gallery: React.FC = () => {
 
     fetchAlbums();
   }, []);
-// serch functionality
+// search functionality
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
-//Creates a new album
+// Creates a new album
   const handleCreateAlbum = async (
     name: string,
-    images: CloudinaryResult[]
+    images: CloudinaryResult[],
+    userId: number
+
   ) => {
     try {
       const response = await fetch("/api/albumupload", {
@@ -48,7 +50,7 @@ const Gallery: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, images }),
+        body: JSON.stringify({ name, images, userId }),
       });
 
       if (!response.ok) {
@@ -104,7 +106,7 @@ const Gallery: React.FC = () => {
       <div className="absolute inset-0 z-0">
         <SparklesPreview />
       </div>
-      <div className="relative z-10 flex flex-col items-center justify-center space-y-4 top-5">
+      <div className="relative z-1 flex flex-col items-center justify-center space-y-4 top-5">
         <div className="flex justify-center space-x-4 min-h-fit">
           <SearchBox onSearch={handleSearch} />
           <CreateAlbumButton onClick={() => setIsModalOpen(true)} />
@@ -122,9 +124,9 @@ const Gallery: React.FC = () => {
       </div>
       <ConfirmDeleteModal
         isOpen={isConfirmDeleteModalOpen}
-        onRequestClose={() => {
+        onCancel={() => {
           setIsConfirmDeleteModalOpen(false);
-          (document.getElementById("confirmation_modal") as HTMLDialogElement | null)?.close();
+          setAlbumToDelete(null);
         }}
         onConfirm={confirmDeleteAlbum}
       />
@@ -133,4 +135,3 @@ const Gallery: React.FC = () => {
 };
 
 export default Gallery;
-

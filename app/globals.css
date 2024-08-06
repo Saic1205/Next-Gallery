@@ -2,3 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

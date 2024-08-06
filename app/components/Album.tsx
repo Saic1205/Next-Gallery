@@ -18,7 +18,7 @@ const Album: React.FC<AlbumProps> = ({ album, onClick, onDelete }) => {
     <div
       onClick={onClick}
       style={{ minWidth: "200px", minHeight: "200px" }}
-      className="card bg-base-100 bg-opacity-75 shadow-xl max-w-xs w-full cursor-pointer"
+      className="card bg-base-100 bg-opacity-75 shadow-xl max-w-xs w-full cursor-pointer z-1"
     >
       <figure className="relative h-64 w-full">
         {isLoading && (
@@ -55,8 +55,8 @@ const Album: React.FC<AlbumProps> = ({ album, onClick, onDelete }) => {
         </div>
       </figure>
       <div className="card-body p-2">
-        <h2 className="card-title text-sm justify-center">{album.albumName}</h2>
-        <p className="text-xs">{album.created_at}</p>
+        <h2 className="card-title text-m justify-center">{album.albumName}</h2>
+        <p className="text-xs text-center" >{new Date(album.created_at).toLocaleDateString()}</p>
         <div className="card-actions justify-end">
           <button
             className="btn btn-error btn-outline btn-xs"

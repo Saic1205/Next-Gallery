@@ -10,12 +10,14 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
   };
 
   return (
+    <div className="z-1">
     <input
       type="text"
       className="form-control p-2 rounded-lg"
       placeholder="Search albums..."
       onChange={handleSearch}
     />
+    </div>
   );
 };
 

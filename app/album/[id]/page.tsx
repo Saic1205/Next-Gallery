@@ -6,16 +6,16 @@ import Modal from "./imageView";
 import DownloadButton from "./downloadButton";
 import Image from "next/image";
 import { SparklesPreview } from "@/app/components/ui/sparklesPreview";
+import Skeleton from "./skeleton";
+import Loading from "@/app/loading";
 
 const AlbumDetails: React.FC = () => {
   const params = useParams();
   const [album, setAlbum] = useState<AlbumType | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedImageIds, setSelectedImageIds] = useState<Set<string>>(
-    new Set()
-  );
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+  const [selectedImageIds, setSelectedImageIds] = useState<Set<string>>(new Set());
   const [modalImageId, setModalImageId] = useState<string | null>(null);
-
   const id = params.id as string;
 
   useEffect(() => {
@@ -41,6 +41,10 @@ const AlbumDetails: React.FC = () => {
       setLoading(false);
     }
   }, [id]);
+
+  const handleImageLoad = (imageId: string) => {
+    setLoadedImages(prev => new Set(prev).add(imageId));
+  };
 
   const handleImageClick = (imageId: string) => {
     setSelectedImageIds((prevSelected) => {
@@ -75,7 +79,7 @@ const AlbumDetails: React.FC = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   if (!album) {
@@ -91,7 +95,7 @@ const AlbumDetails: React.FC = () => {
       <div className="absolute inset-0 z-0">
         <SparklesPreview />
       </div>
-      <div className="relative z-10 flex flex-col items-center top-10">
+      <div className="relative z-1 flex flex-col items-center top-10">
         <div className="w-full flex items-center justify-center mb-4 relative">
           <h1 className="text-4xl font-bold text-center absolute left-1/2 transform -translate-x-1/2 text-white">
             {album.albumName}
@@ -115,12 +119,16 @@ const AlbumDetails: React.FC = () => {
               onClick={() => handleImageClick(image.id)}
               onDoubleClick={() => handleImageDoubleClick(image.id)}
             >
+              {!loadedImages.has(image.id) && (
+                <Skeleton className="h-full w-full absolute top-0 left-0" />
+              )}
               <Image
                 src={image.imageUrl}
                 alt={`${image.imgName}`}
                 width={250}
                 height={250}
-                className="object-cover w-full h-full"
+                className={`object-cover w-full h-full ${loadedImages.has(image.id) ? '' : 'invisible'}`}
+                onLoad={() => handleImageLoad(image.id)}
               />
             </div>
           ))}

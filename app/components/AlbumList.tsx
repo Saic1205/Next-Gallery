@@ -14,7 +14,7 @@ const AlbumList: React.FC<AlbumListProps> = ({
   onDelete,
 }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4 z-1">
       {albums.map((album) => (
         <div key={album.id} className="max-w-xs w-full">
           <Album
@@ -29,3 +29,4 @@ const AlbumList: React.FC<AlbumListProps> = ({
 };
 
 export default AlbumList;
+

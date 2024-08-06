@@ -13,11 +13,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// prisma/schema.prisma
+
+model User {
+  id         Int         @id @default(autoincrement())
+  name       String
+  email      String      @unique
+  password   String      @db.VarChar(500)
+  profilePic String?     @db.VarChar(500)
+  albumLists AlbumList[]
+  sessions   Session[]
+}
+
 model AlbumList {
   id        Int      @id @default(autoincrement())
-  albumName String   @unique
+  albumName String
   createdAt DateTime @default(now())
   albums    Album[]
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([albumName, userId])
 }
 
 model Album {
@@ -27,6 +43,13 @@ model Album {
   imageUrl      String    @unique @db.VarChar(500)
   uploadedAt    DateTime  @default(now())
   albumListId   Int
-  albumList     AlbumList @relation(fields: [albumListId], references: [id])
+  albumList     AlbumList @relation(fields: [albumListId], references: [id], onDelete: Cascade)
 }
 
+model Session {
+  id      Int      @id @default(autoincrement())
+  token   String   @unique
+  expires DateTime
+  userId  Int
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

@@ -33,3 +33,13 @@ export type AlbumType = {
   created_at: string;
   albums: CloudinaryResult[];
 };
+
+export type LoginRequest = {
+  email: string;
+  password: string;
+}
+
+export type User = {
+  email: string;
+  sessionToken: string;
+}
