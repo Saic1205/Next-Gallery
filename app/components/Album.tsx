@@ -55,8 +55,8 @@ const Album: React.FC<AlbumProps> = ({ album, onClick, onDelete }) => {
         </div>
       </figure>
       <div className="card-body p-2">
-        <h2 className="card-title text-sm justify-center">{album.albumName}</h2>
-        <p className="text-xs">{album.created_at}</p>
+        <h2 className="card-title text-m justify-center">{album.albumName}</h2>
+        <p className="text-xs text-center" >{new Date(album.created_at).toLocaleDateString()}</p>
         <div className="card-actions justify-end">
           <button
             className="btn btn-error btn-outline btn-xs"
