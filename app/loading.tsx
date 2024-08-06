@@ -1,14 +1,16 @@
 import React from "react";
 
-// Default values shown
+
 
 const Loading = () => {
   return (
-    <div
+    <div 
+    
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        height: "100vh",
       }}
     >
       <span className="loading loading-infinity loading-lg text-primary"></span>

@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Navbar />
           </header>
           {children}
-          <ToastContainer />
+          <ToastContainer  theme='dark' autoClose= {3000}/>
         </SessionWrapper>
       </body>
     </html>
