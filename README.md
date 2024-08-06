@@ -2,17 +2,17 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
-
-```bash
+First, run npm I to install the needed modules.:
+then run
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+create a .env file containing the following fields..
+
+DATABASE_URL="mysql://yourusername:yourpasswrd@localhost:3306/databasename"
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="yourcloudname"
+CLOUDINARY_API_KEY ="yourapikey"
+CLOUDINARY_API_SECRET ="your api_secret".
 ```
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
